@@ -1,4 +1,4 @@
-import { Action, Drink, Amount, SlotReels } from '../types'
+import { Amount, SlotReels } from '../types'
 
 export const SLOT_DATA: SlotReels = {
   actions: ['飲む', '休肝日'],
