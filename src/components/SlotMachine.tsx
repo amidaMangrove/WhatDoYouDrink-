@@ -12,6 +12,11 @@ const SlotMachine: React.FC = () => {
     drink: 'idle',
     amount: 'idle'
   })
+  const [currentResults, setCurrentResults] = useState<{
+    action?: string
+    drink?: string
+    amount?: string
+  }>({})
   const [isSpinning, setIsSpinning] = useState(false)
 
   const spin = async () => {
@@ -19,6 +24,7 @@ const SlotMachine: React.FC = () => {
 
     setIsSpinning(true)
     setResult(null)
+    setCurrentResults({})
     
     setReelStates({
       action: 'spinning',
@@ -30,6 +36,7 @@ const SlotMachine: React.FC = () => {
     
     setTimeout(() => {
       setReelStates(prev => ({ ...prev, action: 'stopped' }))
+      setCurrentResults(prev => ({ ...prev, action }))
     }, 1000)
 
     if (action === '休肝日') {
@@ -50,10 +57,12 @@ const SlotMachine: React.FC = () => {
 
     setTimeout(() => {
       setReelStates(prev => ({ ...prev, drink: 'stopped' }))
+      setCurrentResults(prev => ({ ...prev, drink }))
     }, 2000)
 
     setTimeout(() => {
       setReelStates(prev => ({ ...prev, amount: 'stopped' }))
+      setCurrentResults(prev => ({ ...prev, amount }))
       setResult({ action, drink, amount })
       setIsSpinning(false)
     }, 3000)
@@ -66,14 +75,14 @@ const SlotMachine: React.FC = () => {
           items={SLOT_DATA.actions}
           state={reelStates.action}
           title="行動"
-          result={result?.action}
+          result={currentResults.action}
         />
         {reelStates.action !== 'idle' && (
           <SlotReel 
             items={SLOT_DATA.drinks}
             state={reelStates.drink}
             title="飲み物"
-            result={result?.drink}
+            result={currentResults.drink}
           />
         )}
         {reelStates.drink !== 'idle' && (
@@ -81,7 +90,7 @@ const SlotMachine: React.FC = () => {
             items={SLOT_DATA.amounts}
             state={reelStates.amount}
             title="杯数"
-            result={result?.amount}
+            result={currentResults.amount}
           />
         )}
       </div>
