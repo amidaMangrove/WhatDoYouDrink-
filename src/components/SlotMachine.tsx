@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { SlotResult, ReelState } from '../types'
-import { SLOT_DATA, getRandomFromArray, getBonusWeightedAmount } from '../utils/slotData'
+import { SLOT_DATA, getRandomFromArray, getBonusWeightedAmount, getWeightedAction } from '../utils/slotData'
 import SlotReel from './SlotReel'
 import { default as SlotResultComponent } from './SlotResult'
 import './SlotMachine.css'
@@ -32,7 +32,7 @@ const SlotMachine: React.FC = () => {
       amount: 'spinning'
     })
 
-    const action = getRandomFromArray(SLOT_DATA.actions)
+    const action = getWeightedAction()
     
     setTimeout(() => {
       setReelStates(prev => ({ ...prev, action: 'stopped' }))

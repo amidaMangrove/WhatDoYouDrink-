@@ -24,6 +24,10 @@ export const getRandomFromArray = <T>(array: T[]): T => {
   return array[randomIndex]
 }
 
+export const getWeightedAction = (): '飲む' | '休肝日' => {
+  return Math.random() < 0.8 ? '飲む' : '休肝日'
+}
+
 export const shouldShowBonus = (): boolean => {
   const now = new Date()
   const hour = now.getHours()
