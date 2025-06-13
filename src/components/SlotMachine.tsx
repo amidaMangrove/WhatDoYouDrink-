@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { SlotResult, ReelState } from '../types'
 import { SLOT_DATA, getRandomFromArray, getBonusWeightedAmount, getWeightedAction } from '../utils/slotData'
+import { createBeepSound } from '../utils/audioUtils'
 import SlotReel from './SlotReel'
 import { default as SlotResultComponent } from './SlotResult'
 import './SlotMachine.css'
@@ -37,6 +38,7 @@ const SlotMachine: React.FC = () => {
     setTimeout(() => {
       setReelStates(prev => ({ ...prev, action: 'stopped' }))
       setCurrentResults(prev => ({ ...prev, action }))
+      createBeepSound(600, 150)
     }, 1000)
 
     if (action === '休肝日') {
@@ -58,11 +60,13 @@ const SlotMachine: React.FC = () => {
     setTimeout(() => {
       setReelStates(prev => ({ ...prev, drink: 'stopped' }))
       setCurrentResults(prev => ({ ...prev, drink }))
+      createBeepSound(700, 150)
     }, 2000)
 
     setTimeout(() => {
       setReelStates(prev => ({ ...prev, amount: 'stopped' }))
       setCurrentResults(prev => ({ ...prev, amount }))
+      createBeepSound(800, 200)
       setResult({ action, drink, amount })
       setIsSpinning(false)
     }, 3000)
